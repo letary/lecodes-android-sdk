@@ -1,9 +1,9 @@
 # LeCodes Android SDK
 
 Binary distribution of the LeCodes Android runtime — a self-contained fat AAR (the Kotlin host, the
-UI renderer and the native engine, `arm64-v8a` + `armeabi-v7a`) attached to the
+UI renderer and the native engine, `arm64-v8a` + `armeabi-v7a`; the Vulkan one `arm64-v8a`) attached to the
 [Releases](../../releases) of this repo. Source lives in the private LeCodes repositories; this repo
-only hosts the artifacts. Current: **2.0.13** (SDK 2.x — a 2.x release runs the bundles the 2.x
+only hosts the artifacts. Current: **2.2.11** (SDK 2.x — a 2.x release runs the bundles the 2.x
 `lecodes` CLI compiles; the 1.x releases stay for 1.x projects).
 
 **Building a LeCodes app?** You normally don't wire this up by hand — `lecodes app init android`
@@ -11,15 +11,20 @@ generates a ready Gradle shell around it (see the [lecodes CLI](https://le.codes
 
 ## Variants
 
-One release carries four artifacts of the same Kotlin API; a shell links the smallest one covering
+One release carries five artifacts of the same Kotlin API; a shell links the smallest one covering
 the engines its bundle uses (`lecodes app sync` picks it):
 
 | artifact | engines |
 |---|---|
-| `lecodes-sdk` | full: 3D (Filament) + 2D + physics (Jolt) + navigation + multiplayer |
+| `lecodes-sdk` | full: 3D (Filament on OpenGL ES) + 2D + physics (Jolt) + navigation + multiplayer |
 | `lecodes-sdk-3d` | 3D rendering without the game stack |
 | `lecodes-sdk-2d` | the 2D engine, no 3D |
 | `lecodes-sdk-core` | UI only |
+| `lecodes-sdk-vulkan` | full, with Filament on **Vulkan** (OpenGL ES where the device has no Vulkan 1.1); `arm64-v8a` only |
+
+`lecodes-sdk-vulkan` is for 3D games: set `android.variant: "vulkan"` in `app.json` (auto-selection
+never picks it). Its APK installs on 64-bit devices only, and the OpenGL ES fallback keeps a Vulkan-less
+device running.
 
 ## Install (manual)
 
@@ -45,7 +50,7 @@ In your app module:
 
 ```kotlin
 dependencies {
-    implementation("io.letary:lecodes-sdk:2.0.13@aar")   // or lecodes-sdk-3d / -2d / -core
+    implementation("io.letary:lecodes-sdk:2.2.11@aar")   // or lecodes-sdk-3d / -2d / -core / -vulkan
     // The AAR ships no POM, so its dependencies are declared explicitly:
     implementation("androidx.core:core-ktx:1.18.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
