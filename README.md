@@ -3,7 +3,7 @@
 Binary distribution of the LeCodes Android runtime — a self-contained fat AAR (the Kotlin host, the
 UI renderer and the native engine, `arm64-v8a` + `armeabi-v7a`; the Vulkan one `arm64-v8a`) attached to the
 [Releases](../../releases) of this repo. Source lives in the private LeCodes repositories; this repo
-only hosts the artifacts. Current: **2.2.11** (SDK 2.x — a 2.x release runs the bundles the 2.x
+only hosts the artifacts. Current: **2.2.12** (SDK 2.x — a 2.x release runs the bundles the 2.x
 `lecodes` CLI compiles; the 1.x releases stay for 1.x projects).
 
 **Building a LeCodes app?** You normally don't wire this up by hand — `lecodes app init android`
@@ -50,7 +50,7 @@ In your app module:
 
 ```kotlin
 dependencies {
-    implementation("io.letary:lecodes-sdk:2.2.11@aar")   // or lecodes-sdk-3d / -2d / -core / -vulkan
+    implementation("io.letary:lecodes-sdk:2.2.12@aar")   // or lecodes-sdk-3d / -2d / -core / -vulkan
     // The AAR ships no POM, so its dependencies are declared explicitly:
     implementation("androidx.core:core-ktx:1.18.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
